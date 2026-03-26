@@ -21,8 +21,11 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 export const api = {
   getSiteSettings: () => request<SiteSettings>("/site-settings/"),
   getAcademics: () => request<AcademicsContent[]>("/academics/"),
+  getAcademicDetail: (slug: string) => request<AcademicsContent>(`/academics/${slug}/`),
   getAnnouncements: () => request<Announcement[]>("/announcements/"),
+  getAnnouncementDetail: (slug: string) => request<Announcement>(`/announcements/${slug}/`),
   getEvents: () => request<EventItem[]>("/events/"),
+  getEventDetail: (slug: string) => request<EventItem>(`/events/${slug}/`),
   getGallery: () => request<GalleryItem[]>("/gallery/"),
   submitContact: (payload: ContactMessageInput) =>
     request("/contact/", {

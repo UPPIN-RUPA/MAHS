@@ -1,13 +1,15 @@
 from django.db import models
 
+from apps.common.models import TimeStampedModel
 
-class AcademicsContent(models.Model):
-    title = models.CharField(max_length=160)
-    description = models.TextField()
+
+class AcademicsContent(TimeStampedModel):
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True, default="")
+    summary = models.CharField(max_length=300, blank=True)
+    content = models.TextField(default="")
     display_order = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ["display_order", "title"]

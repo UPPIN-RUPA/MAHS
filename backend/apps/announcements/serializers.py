@@ -3,7 +3,7 @@ from rest_framework import serializers
 from .models import Announcement
 
 
-class AnnouncementSerializer(serializers.ModelSerializer):
+class AnnouncementListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Announcement
         fields = [
@@ -11,9 +11,13 @@ class AnnouncementSerializer(serializers.ModelSerializer):
             "title",
             "slug",
             "summary",
-            "content",
             "category",
             "publish_date",
-            "expiry_date",
-            "is_published",
+            "is_featured",
         ]
+
+
+class AnnouncementDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Announcement
+        fields = "__all__"

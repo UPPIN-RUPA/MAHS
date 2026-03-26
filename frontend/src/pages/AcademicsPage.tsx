@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { PageHero } from "../components/PageHero";
 import { SectionCard } from "../components/SectionCard";
 import { useApiData } from "../hooks/useApiData";
@@ -18,7 +19,10 @@ export function AcademicsPage() {
         <div className="container card-grid">
           {data.map((item) => (
             <SectionCard key={item.id} title={item.title}>
-              <p>{item.description}</p>
+              <p>{item.summary || item.content}</p>
+              <Link className="text-link" to={`/academics/${item.slug}`}>
+                Read more
+              </Link>
             </SectionCard>
           ))}
           {!data.length && <SectionCard title="No academic sections yet">Academic content from the backend will appear here.</SectionCard>}

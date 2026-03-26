@@ -1,18 +1,27 @@
 from django.db import models
 from django.utils import timezone
 
+from apps.common.models import TimeStampedModel
 
-class Announcement(models.Model):
-    title = models.CharField(max_length=200)
+
+class Announcement(TimeStampedModel):
+    CATEGORY_CHOICES = [
+        ("notice", "Notice"),
+        ("news", "News"),
+        ("exam", "Exam"),
+        ("holiday", "Holiday"),
+        ("admission", "Admission"),
+    ]
+
+    title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
-    summary = models.TextField()
+    summary = models.CharField(max_length=300, blank=True)
     content = models.TextField()
-    category = models.CharField(max_length=80, default="General")
-    publish_date = models.DateTimeField(default=timezone.now)
-    expiry_date = models.DateTimeField(blank=True, null=True)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default="notice")
+    publish_date = models.DateField(default=timezone.now)
+    expiry_date = models.DateField(blank=True, null=True)
     is_published = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    is_featured = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["-publish_date", "-created_at"]

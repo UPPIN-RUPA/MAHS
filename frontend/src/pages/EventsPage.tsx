@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { PageHero } from "../components/PageHero";
 import { SectionCard } from "../components/SectionCard";
 import { useApiData } from "../hooks/useApiData";
@@ -19,6 +20,9 @@ export function EventsPage() {
           {data.map((item) => (
             <SectionCard key={item.id} title={item.title} meta={`${item.event_date} · ${item.venue}`}>
               <p>{item.description}</p>
+              <Link className="text-link" to={`/events/${item.slug}`}>
+                View details
+              </Link>
             </SectionCard>
           ))}
           {!data.length && <SectionCard title="No events scheduled">The event calendar will populate once content is added through admin.</SectionCard>}

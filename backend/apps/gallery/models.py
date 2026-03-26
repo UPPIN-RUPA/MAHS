@@ -1,18 +1,27 @@
 from django.db import models
 
+from apps.common.models import TimeStampedModel
 from apps.events.models import Event
 
 
-class GalleryItem(models.Model):
-    title = models.CharField(max_length=160)
+class GalleryItem(TimeStampedModel):
+    CATEGORY_CHOICES = [
+        ("campus", "Campus"),
+        ("annual_day", "Annual Day"),
+        ("sports", "Sports"),
+        ("cultural", "Cultural"),
+        ("classroom", "Classroom"),
+        ("other", "Other"),
+    ]
+
+    title = models.CharField(max_length=255)
     image = models.URLField()
-    category = models.CharField(max_length=120)
+    category = models.CharField(max_length=30, choices=CATEGORY_CHOICES, default="other")
     related_event = models.ForeignKey(Event, on_delete=models.SET_NULL, blank=True, null=True, related_name="gallery_items")
-    uploaded_at = models.DateTimeField(auto_now_add=True)
     is_featured = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ["-is_featured", "-uploaded_at"]
+        ordering = ["-created_at"]
 
     def __str__(self) -> str:
         return self.title

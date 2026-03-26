@@ -1,13 +1,14 @@
 from django.db import models
 
+from apps.common.models import TimeStampedModel
 
-class ContactMessage(models.Model):
-    name = models.CharField(max_length=120)
+
+class ContactMessage(TimeStampedModel):
+    name = models.CharField(max_length=255)
     email = models.EmailField()
-    phone = models.CharField(max_length=40, blank=True)
-    subject = models.CharField(max_length=200)
+    phone = models.CharField(max_length=20, blank=True)
+    subject = models.CharField(max_length=255)
     message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
     is_resolved = models.BooleanField(default=False)
 
     class Meta:

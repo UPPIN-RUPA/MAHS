@@ -8,4 +8,4 @@ class GalleryItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GalleryItem
-        fields = ["id", "title", "image", "category", "related_event", "related_event_title", "uploaded_at", "is_featured"]
+        fields = ["id", "title", "image", "category", "related_event", "related_event_title", "created_at", "is_featured"]

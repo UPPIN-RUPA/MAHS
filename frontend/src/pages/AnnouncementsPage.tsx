@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { PageHero } from "../components/PageHero";
 import { SectionCard } from "../components/SectionCard";
 import { useApiData } from "../hooks/useApiData";
@@ -19,7 +20,9 @@ export function AnnouncementsPage() {
           {data.map((item) => (
             <SectionCard key={item.id} title={item.title} meta={`${item.category} · ${new Date(item.publish_date).toLocaleDateString()}`}>
               <p>{item.summary}</p>
-              <p>{item.content}</p>
+              <Link className="text-link" to={`/announcements/${item.slug}`}>
+                Read more
+              </Link>
             </SectionCard>
           ))}
           {!data.length && <SectionCard title="No announcements published">Published announcements will appear here once the backend is populated.</SectionCard>}

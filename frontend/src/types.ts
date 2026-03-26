@@ -15,7 +15,9 @@ export type SiteSettings = {
 export type AcademicsContent = {
   id: number;
   title: string;
-  description: string;
+  slug: string;
+  summary: string;
+  content: string;
   display_order: number;
   is_active: boolean;
 };
@@ -30,6 +32,7 @@ export type Announcement = {
   publish_date: string;
   expiry_date: string | null;
   is_published: boolean;
+  is_featured?: boolean;
 };
 
 export type EventItem = {
@@ -53,7 +56,7 @@ export type GalleryItem = {
   category: string;
   related_event: number | null;
   related_event_title: string;
-  uploaded_at: string;
+  created_at: string;
   is_featured: boolean;
 };
 
