@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}MAHS | Events{% endblock %}
+
+{% block content %}
+  <section class="page-hero">
+    <div class="container narrow">
+      <p class="eyebrow">Events</p>
+      <h1>Programs, celebrations, and school calendar visibility.</h1>
+      <p class="lead">This section keeps the school community updated on upcoming activities and recent campus events.</p>
+    </div>
+  </section>
+  <section class="content-section">
+    <div class="container section-header">
+      <div>
+        <h2>Upcoming events</h2>
+      </div>
+    </div>
+    <div class="container card-grid">
+      {% for event in upcoming_events %}
+        <article class="content-card">
+          <p class="meta">{{ event.start_at|date:"M d, Y · g:i A" }} - {{ event.end_at|date:"g:i A" }}</p>
+          <h3>{{ event.title }}</h3>
+          <p><strong>Location:</strong> {{ event.location }}</p>
+          <p>{{ event.description }}</p>
+        </article>
+      {% empty %}
+        <article class="content-card empty-state">
+          <h3>No upcoming events published</h3>
+          <p>Add school events in admin to make the calendar useful for students and staff.</p>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+  <section class="content-section alt">
+    <div class="container section-header">
+      <div>
+        <h2>Recent events</h2>
+      </div>
+    </div>
+    <div class="container card-grid">
+      {% for event in past_events %}
+        <article class="content-card">
+          <p class="meta">{{ event.start_at|date:"M d, Y" }}</p>
+          <h3>{{ event.title }}</h3>
+          <p>{{ event.description|truncatechars:150 }}</p>
+        </article>
+      {% empty %}
+        <article class="content-card empty-state">
+          <h3>No past events yet</h3>
+          <p>Older events will appear here after they are added through the admin dashboard.</p>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

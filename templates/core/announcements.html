@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}MAHS | Announcements{% endblock %}
+
+{% block content %}
+  <section class="page-hero">
+    <div class="container narrow">
+      <p class="eyebrow">News & Announcements</p>
+      <h1>Important notices and school updates in one place.</h1>
+      <p class="lead">This section supports the communication side of the school hub and is intended to stay current through the admin dashboard.</p>
+    </div>
+  </section>
+  <section class="content-section">
+    <div class="container stack-list">
+      {% for announcement in announcements %}
+        <article class="content-card">
+          <p class="meta">{{ announcement.category }} · {{ announcement.published_at|date:"M d, Y" }}{% if announcement.is_urgent %} · Urgent{% endif %}</p>
+          <h3>{{ announcement.title }}</h3>
+          <p>{{ announcement.summary }}</p>
+          {% if announcement.body %}
+            <p>{{ announcement.body }}</p>
+          {% endif %}
+        </article>
+      {% empty %}
+        <article class="content-card empty-state">
+          <h3>No announcements published</h3>
+          <p>Use the admin panel to publish school notices and updates.</p>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

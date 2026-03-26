@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}MAHS | Home{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">MAHS School Website</p>
+        <h1>A central digital home for students, alumni, staff, and school leadership.</h1>
+        <p class="lead">
+          MAHS is designed as a modern school platform that combines school identity, announcements,
+          academics, events, and community visibility in one clear experience.
+        </p>
+        <div class="button-row">
+          <a class="button primary" href="/announcements/">View Updates</a>
+          <a class="button secondary" href="/events/">Explore Events</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h2>School Hub Priorities</h2>
+        <ul>
+          <li>Professional public-facing school identity</li>
+          <li>Admin-managed announcements and events</li>
+          <li>Mobile-friendly communication platform</li>
+          <li>Future-ready student and alumni access</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-section">
+    <div class="container stat-grid">
+      {% for stat in stats %}
+        <article class="stat-card">
+          <strong>{{ stat.value }}</strong>
+          <span>{{ stat.label }}</span>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container section-header">
+      <div>
+        <p class="eyebrow">Announcements</p>
+        <h2>Latest school notices</h2>
+      </div>
+      <a class="text-link" href="/announcements/">See all</a>
+    </div>
+    <div class="container card-grid">
+      {% for announcement in announcements %}
+        <article class="content-card">
+          <p class="meta">{{ announcement.category }}{% if announcement.is_urgent %} · Urgent{% endif %}</p>
+          <h3>{{ announcement.title }}</h3>
+          <p>{{ announcement.summary }}</p>
+        </article>
+      {% empty %}
+        <article class="content-card empty-state">
+          <h3>No announcements yet</h3>
+          <p>Add announcements through the admin dashboard to keep the homepage current.</p>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="content-section alt">
+    <div class="container section-header">
+      <div>
+        <p class="eyebrow">Events</p>
+        <h2>Upcoming campus activity</h2>
+      </div>
+      <a class="text-link" href="/events/">See calendar</a>
+    </div>
+    <div class="container card-grid">
+      {% for event in upcoming_events %}
+        <article class="content-card">
+          <p class="meta">{{ event.start_at|date:"M d, Y · g:i A" }}</p>
+          <h3>{{ event.title }}</h3>
+          <p>{{ event.location }}</p>
+          <p>{{ event.description|truncatechars:150 }}</p>
+        </article>
+      {% empty %}
+        <article class="content-card empty-state">
+          <h3>No upcoming events yet</h3>
+          <p>Use the admin dashboard to publish the next school activities and programs.</p>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container section-header">
+      <div>
+        <p class="eyebrow">Community</p>
+        <h2>Built for the full MAHS network</h2>
+      </div>
+    </div>
+    <div class="container three-up">
+      <article class="info-card">
+        <h3>Students</h3>
+        <p>Find school updates, academic information, event visibility, and future personalized access points.</p>
+      </article>
+      <article class="info-card">
+        <h3>Alumni</h3>
+        <p>Stay connected to the school community and prepare for future alumni profiles and engagement features.</p>
+      </article>
+      <article class="info-card">
+        <h3>Administration</h3>
+        <p>Use the admin side to publish announcements, manage events, and keep school information accurate.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="gallery-strip">
+    <div class="container section-header">
+      <div>
+        <p class="eyebrow">Gallery</p>
+        <h2>School highlights</h2>
+      </div>
+      <a class="text-link" href="/gallery/">Open gallery</a>
+    </div>
+    <div class="container gallery-grid">
+      {% for item in featured_gallery %}
+        <article class="gallery-card" style="background-image: linear-gradient(rgba(9, 28, 48, 0.55), rgba(9, 28, 48, 0.8)), url('{{ item.image_url }}');">
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.caption|default:"School moment" }}</p>
+        </article>
+      {% empty %}
+        <article class="gallery-card placeholder">
+          <h3>Gallery content will appear here</h3>
+          <p>Add featured gallery items in admin to showcase campus life.</p>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

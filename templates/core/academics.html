@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}MAHS | Academics{% endblock %}
+
+{% block content %}
+  <section class="page-hero">
+    <div class="container narrow">
+      <p class="eyebrow">Academics</p>
+      <h1>Academic pathways and school learning priorities.</h1>
+      <p class="lead">Use this section to highlight departments, grade groups, curriculum strengths, and academic support programs.</p>
+    </div>
+  </section>
+  <section class="content-section">
+    <div class="container card-grid">
+      {% for program in programs %}
+        <article class="content-card">
+          <h3>{{ program.title }}</h3>
+          {% if program.lead %}<p class="meta">Lead: {{ program.lead }}</p>{% endif %}
+          <p>{{ program.overview }}</p>
+          {% if program.highlights %}
+            <p>{{ program.highlights }}</p>
+          {% endif %}
+        </article>
+      {% empty %}
+        <article class="content-card empty-state">
+          <h3>No academic programs added yet</h3>
+          <p>Add programs in the admin dashboard to populate this page.</p>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

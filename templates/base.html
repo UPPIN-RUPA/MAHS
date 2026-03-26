@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}MAHS{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/site.css' %}" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-shell">
+        <a class="brand" href="/">MAHS</a>
+        <nav class="site-nav">
+          <a href="/">Home</a>
+          <a href="/about/">About</a>
+          <a href="/academics/">Academics</a>
+          <a href="/events/">Events</a>
+          <a href="/announcements/">Announcements</a>
+          <a href="/gallery/">Gallery</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <h3>MAHS</h3>
+          <p>A modern school hub for learning, communication, and community.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/events/">Events</a></li>
+            <li><a href="/announcements/">Announcements</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Admin</h4>
+          <ul>
+            <li><a href="/admin/">Dashboard</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

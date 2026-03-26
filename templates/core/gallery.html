@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}MAHS | Gallery{% endblock %}
+
+{% block content %}
+  <section class="page-hero">
+    <div class="container narrow">
+      <p class="eyebrow">Gallery</p>
+      <h1>Moments, achievements, and school life highlights.</h1>
+      <p class="lead">Use this section to showcase school culture, annual programs, celebrations, and milestone moments.</p>
+    </div>
+  </section>
+  <section class="content-section">
+    <div class="container gallery-grid gallery-full">
+      {% for item in gallery_items %}
+        <article class="gallery-card" style="background-image: linear-gradient(rgba(9, 28, 48, 0.55), rgba(9, 28, 48, 0.8)), url('{{ item.image_url }}');">
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.caption }}</p>
+        </article>
+      {% empty %}
+        <article class="gallery-card placeholder">
+          <h3>No gallery items yet</h3>
+          <p>Add hosted image URLs in admin to populate the gallery.</p>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}
