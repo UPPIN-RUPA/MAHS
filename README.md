@@ -282,7 +282,7 @@ python manage.py runserver
 
 Backend URLs:
 
-- API root: `http://127.0.0.1:8000/api/`
+- API root: `https://mahs-ussp.onrender.com/api/` for the deployed app, or `http://127.0.0.1:8000/api/` for local development
 - admin: `http://127.0.0.1:8000/admin/`
 
 ---
@@ -303,7 +303,7 @@ Frontend URL:
 The frontend reads the backend base URL from:
 
 ```bash
-VITE_API_BASE_URL=http://127.0.0.1:8000/api
+VITE_API_BASE_URL=https://mahs-ussp.onrender.com/api
 ```
 
 See:
