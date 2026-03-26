@@ -118,3 +118,22 @@ This split makes MAHS stronger as a real project because it demonstrates:
 3. Configure PostgreSQL for deployed environments
 4. Add media handling for gallery uploads
 5. Move into auth and alumni features only after the public MVP is stable
+
+## Demo Data
+
+The backend includes a seed command for realistic school content so the public site is usable immediately in demos.
+
+From `backend/`:
+
+```bash
+source .venv/bin/activate
+python manage.py seed_demo_content
+```
+
+Current seeded demo set:
+
+- 1 active site settings record
+- 5 announcements
+- 5 events
+- 10 gallery items
+- 4 academics sections
