@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 import { useMemo } from "react";
-import { Autoplay, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
+import { HomeCarousel } from "../components/HomeCarousel";
+import { HomeStats } from "../components/HomeStats";
+import { LeadershipSection } from "../components/LeadershipSection";
 import { SectionCard } from "../components/SectionCard";
 import { useApiData } from "../hooks/useApiData";
 import { api } from "../services/api";
@@ -43,6 +42,28 @@ export function HomePage() {
     { value: `${featuredAnnouncements.length || 0}`, label: "Active notices" },
     { value: `${featuredEvents.length || 0}`, label: "Visible events" },
     { value: `${featuredGallery.length || 0}`, label: "Featured moments" },
+  ];
+  const schoolStats = [
+    {
+      value: `${featuredAnnouncements.length || 0}`,
+      label: "Current notices",
+      description: "Timely school updates and announcements are kept visible in one place.",
+    },
+    {
+      value: `${featuredEvents.length || 0}`,
+      label: "Event highlights",
+      description: "Programs, celebrations, and important calendar moments stay easy to follow.",
+    },
+    {
+      value: `${featuredGallery.length || 0}`,
+      label: "Featured moments",
+      description: "School life, campus culture, and activity highlights are surfaced visually.",
+    },
+    {
+      value: site.data.principal_name ? "1" : "Live",
+      label: "Leadership voice",
+      description: "Principal messaging and school identity content come directly from the backend.",
+    },
   ];
   const heroSlides = useMemo(() => {
     const galleryImages = featuredGallery.map((item) => item.image).filter(Boolean);
@@ -94,78 +115,9 @@ export function HomePage() {
 
   return (
     <>
-      <section className="hero">
-        <div className="container">
-          <div className="hero-carousel-shell">
-            <Swiper className="hero-carousel" modules={[Autoplay, Pagination]} autoplay={{ delay: 4500, disableOnInteraction: false }} pagination={{ clickable: true }} loop>
-              {heroSlides.map((slide) => (
-                <SwiperSlide key={slide.key}>
-                  <article
-                    className={`hero-slide tone-${slide.tone}`}
-                    style={
-                      slide.image
-                        ? {
-                            backgroundImage: `linear-gradient(120deg, rgba(10, 24, 45, 0.78), rgba(10, 24, 45, 0.38)), url('${slide.image}')`,
-                          }
-                        : undefined
-                    }
-                  >
-                    <div className="hero-slide-copy">
-                      <p className="eyebrow">{slide.eyebrow}</p>
-                      <h1>{slide.title}</h1>
-                      <p className="lead">{slide.description}</p>
-                      <div className="button-row">
-                        <Link className="button primary" to={slide.ctaTo}>
-                          {slide.ctaLabel}
-                        </Link>
-                        <Link className="button secondary" to="/announcements">
-                          Latest updates
-                        </Link>
-                      </div>
-                    </div>
-                  </article>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-            <aside className="hero-card hero-side-panel">
-              <h2>{site.data.school_name}</h2>
-              <p className="card-kicker">{site.data.tagline || "A connected school experience"}</p>
-              <ul>
-                <li>Professional public website</li>
-                <li>API-first backend content system</li>
-                <li>School announcements and events visibility</li>
-                <li>Admin-managed updates without code edits</li>
-              </ul>
-            </aside>
-          </div>
-          <div className="hero-stat-row">
-            {heroStats.map((stat) => (
-              <div key={stat.label} className="hero-stat">
-                <strong>{stat.value}</strong>
-                <span>{stat.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="content-section">
-        <div className="container showcase-grid">
-          <article className="showcase-card">
-            <p className="eyebrow">Welcome</p>
-            <h2>One digital home for students, staff, and alumni.</h2>
-            <p>
-              MAHS is designed to work as the school’s communication layer, not just its public brochure. Announcements,
-              events, academics, and school identity now live in one platform.
-            </p>
-          </article>
-          <article className="showcase-card accent">
-            <p className="eyebrow">Principal Message</p>
-            <h2>{site.data.principal_name || "School Leadership"}</h2>
-            <p>{site.data.principal_message || "This section can carry a principal or leadership message pulled directly from the backend."}</p>
-          </article>
-        </div>
-      </section>
+      <HomeCarousel schoolName={site.data.school_name} tagline={site.data.tagline} slides={heroSlides} stats={heroStats} />
+      <HomeStats stats={schoolStats} />
+      <LeadershipSection principalName={site.data.principal_name || "School Leadership"} principalMessage={site.data.principal_message || undefined} schoolName={site.data.school_name || "MAHS"} />
 
       <section className="content-section">
         <div className="container section-header">

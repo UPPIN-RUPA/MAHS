@@ -259,6 +259,145 @@ button {
   font-size: 0.92rem;
 }
 
+.home-stats-section {
+  margin-top: -1.75rem;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 4rem;
+}
+
+.home-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.home-stat-card {
+  padding: 1.4rem 1.2rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 1.2rem;
+  box-shadow: var(--shadow);
+}
+
+.home-stat-value {
+  margin: 0 0 0.35rem;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.home-stat-card h3 {
+  margin: 0 0 0.45rem;
+  font-size: 1rem;
+}
+
+.home-stat-card p {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.leadership-section {
+  margin-bottom: 4rem;
+}
+
+.leadership-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 0.95fr;
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+.leadership-content,
+.leadership-highlight-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 1.4rem;
+  box-shadow: var(--shadow);
+}
+
+.leadership-content {
+  padding: 2rem;
+}
+
+.section-kicker {
+  display: inline-block;
+  margin-bottom: 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #365b8c;
+}
+
+.leadership-content h2 {
+  margin: 0 0 1rem;
+  font-size: clamp(1.9rem, 2.8vw, 2.8rem);
+  line-height: 1.15;
+}
+
+.leadership-message {
+  margin: 0 0 1.5rem;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--muted);
+}
+
+.leadership-signoff {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.leadership-signoff strong {
+  font-size: 1.02rem;
+}
+
+.leadership-signoff span {
+  color: #6b7b90;
+  font-size: 0.96rem;
+}
+
+.leadership-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+.leadership-panel {
+  display: flex;
+}
+
+.leadership-highlight-card {
+  width: 100%;
+  padding: 2rem;
+  background: linear-gradient(180deg, #f7faff 0%, #eef4fb 100%);
+}
+
+.leadership-highlight-card ul {
+  margin: 0.6rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.leadership-highlight-card li {
+  margin-bottom: 0.95rem;
+  color: #304861;
+  line-height: 1.65;
+}
+
+.btn-secondary-dark {
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  color: #ffffff;
+}
+
+.btn-secondary-dark:hover {
+  background: #183153;
+}
+
 .content-section {
   padding: 0 0 3rem;
 }
@@ -452,12 +591,14 @@ button {
   .hero-carousel-shell,
   .hero-grid,
   .hero-stat-row,
+  .home-stats-grid,
   .card-grid,
   .three-up,
   .gallery-grid,
   .footer-grid,
   .contact-grid,
   .showcase-grid,
+  .leadership-grid,
   .detail-shell {
     grid-template-columns: 1fr;
   }
@@ -480,5 +621,22 @@ button {
 
   .page-hero {
     padding: 5rem 0 2.5rem;
+  }
+
+  .home-stats-section {
+    margin-top: 1.5rem;
+  }
+
+  .leadership-content,
+  .leadership-highlight-card {
+    padding: 1.4rem;
+  }
+
+  .leadership-actions {
+    flex-direction: column;
+  }
+
+  .leadership-actions .button {
+    width: 100%;
   }
 }
