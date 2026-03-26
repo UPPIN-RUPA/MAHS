@@ -74,9 +74,12 @@ button {
   color: var(--accent);
 }
 
-.hero,
-.page-hero {
+.hero {
   padding: 5rem 0 3rem;
+}
+
+.page-hero {
+  padding: 6.25rem 0 3.5rem;
 }
 
 .hero-grid {
@@ -89,7 +92,12 @@ button {
 .page-hero h1 {
   margin: 0.25rem 0 1rem;
   font-size: clamp(2.4rem, 5vw, 4.75rem);
-  line-height: 0.95;
+  line-height: 1.02;
+}
+
+.page-hero h1 {
+  max-width: 12ch;
+  font-size: clamp(2.3rem, 4.8vw, 4.35rem);
 }
 
 .lead {
@@ -374,5 +382,9 @@ button {
   .section-header {
     align-items: start;
     flex-direction: column;
+  }
+
+  .page-hero {
+    padding: 5rem 0 2.5rem;
   }
 }
