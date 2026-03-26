@@ -132,6 +132,42 @@ button {
   color: var(--muted);
 }
 
+.card-kicker {
+  margin-top: -0.25rem;
+  color: var(--muted);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.hero-stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.hero-stat {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.hero-stat strong {
+  display: block;
+  font-size: 1.4rem;
+}
+
+.hero-stat span {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
 .content-section {
   padding: 0 0 3rem;
 }
@@ -159,7 +195,9 @@ button {
 .three-up,
 .gallery-grid,
 .footer-grid,
-.contact-grid {
+.contact-grid,
+.showcase-grid,
+.detail-shell {
   display: grid;
   gap: 1rem;
 }
@@ -173,6 +211,15 @@ button {
 .footer-grid,
 .contact-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.showcase-grid {
+  grid-template-columns: 1.2fr 1fr;
+}
+
+.detail-shell {
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 0.9fr);
+  align-items: start;
 }
 
 .meta {
@@ -189,6 +236,31 @@ button {
 .stack-list {
   display: grid;
   gap: 1rem;
+}
+
+.showcase-card {
+  padding: 1.5rem;
+  border-radius: 1.4rem;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 253, 250, 1));
+  box-shadow: var(--shadow);
+}
+
+.showcase-card.accent {
+  background: linear-gradient(180deg, rgba(139, 30, 63, 0.08), rgba(255, 253, 250, 1));
+}
+
+.detail-primary,
+.detail-side {
+  min-height: 100%;
+}
+
+.detail-image {
+  height: 16rem;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  background-size: cover;
+  background-position: center;
 }
 
 .gallery-card {
@@ -246,9 +318,23 @@ button {
   background: var(--accent-strong);
 }
 
+.button.secondary {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--line);
+}
+
 .form-status {
   margin: 0;
   color: var(--muted);
+}
+
+.text-link {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.text-link:hover {
+  color: var(--accent-strong);
 }
 
 .site-footer {
@@ -273,11 +359,14 @@ button {
 
 @media (max-width: 900px) {
   .hero-grid,
+  .hero-stat-row,
   .card-grid,
   .three-up,
   .gallery-grid,
   .footer-grid,
-  .contact-grid {
+  .contact-grid,
+  .showcase-grid,
+  .detail-shell {
     grid-template-columns: 1fr;
   }
 

@@ -16,9 +16,15 @@ export function AcademicsPage() {
         description="This section is designed to present the school’s academic structure clearly and can expand into richer curriculum and department views later."
       />
       <section className="content-section">
+        <div className="container section-header">
+          <div>
+            <p className="eyebrow">Academic Sections</p>
+            <h2>Structured learning areas and school priorities.</h2>
+          </div>
+        </div>
         <div className="container card-grid">
           {data.map((item) => (
-            <SectionCard key={item.id} title={item.title}>
+            <SectionCard key={item.id} title={item.title} meta={item.summary || "Academic overview"}>
               <p>{item.summary || item.content}</p>
               <Link className="text-link" to={`/academics/${item.slug}`}>
                 Read more

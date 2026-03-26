@@ -24,16 +24,21 @@ export function AnnouncementDetailPage() {
     <>
       <PageHero eyebrow="Announcement Detail" title={data.title || "Announcement"} description={data.summary || "Detailed school notice content from the MAHS backend."} />
       <section className="content-section">
-        <div className="container stack-list">
-          <article className="content-card">
+        <div className="container detail-shell">
+          <article className="content-card detail-primary">
             <p className="meta">
               {data.category} {data.publish_date ? `· ${new Date(data.publish_date).toLocaleDateString()}` : ""}
             </p>
             <p>{data.content}</p>
+          </article>
+          <aside className="info-card detail-side">
+            <p className="eyebrow">Notice Board</p>
+            <h3>Back to school updates</h3>
+            <p>Announcements are intended to carry notices, exam communication, admissions updates, and urgent school information.</p>
             <Link className="text-link" to="/announcements">
               Back to announcements
             </Link>
-          </article>
+          </aside>
         </div>
       </section>
     </>

@@ -22,13 +22,18 @@ export function AcademicDetailPage() {
     <>
       <PageHero eyebrow="Academic Detail" title={data.title || "Academic section"} description={data.summary || "Detailed academic content from the MAHS backend."} />
       <section className="content-section">
-        <div className="container stack-list">
-          <article className="content-card">
+        <div className="container detail-shell">
+          <article className="content-card detail-primary">
             <p>{data.content}</p>
+          </article>
+          <aside className="info-card detail-side">
+            <p className="eyebrow">Navigate</p>
+            <h3>Academic overview</h3>
+            <p>This detail page is intended for richer curriculum, department, or program content.</p>
             <Link className="text-link" to="/academics">
               Back to academics
             </Link>
-          </article>
+          </aside>
         </div>
       </section>
     </>

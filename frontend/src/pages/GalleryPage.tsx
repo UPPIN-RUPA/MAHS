@@ -14,11 +14,17 @@ export function GalleryPage() {
         description="The gallery is one of the strongest storytelling modules for the public site and will later support richer media handling beyond URL-based images."
       />
       <section className="content-section">
+        <div className="container section-header">
+          <div>
+            <p className="eyebrow">Campus Storytelling</p>
+            <h2>Visual moments from the MAHS community.</h2>
+          </div>
+        </div>
         <div className="container gallery-grid">
           {data.map((item) => (
             <article key={item.id} className="gallery-card" style={{ backgroundImage: `linear-gradient(rgba(9, 28, 48, 0.55), rgba(9, 28, 48, 0.8)), url('${item.image}')` }}>
               <h3>{item.title}</h3>
-              <p>{item.category}</p>
+              <p>{item.category}{item.related_event_title ? ` · ${item.related_event_title}` : ""}</p>
             </article>
           ))}
           {!data.length && (

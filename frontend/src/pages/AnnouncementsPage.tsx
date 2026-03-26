@@ -16,6 +16,12 @@ export function AnnouncementsPage() {
         description="This module gives the administration a reliable way to publish timely communication through Django admin while the public site consumes the data through the API."
       />
       <section className="content-section">
+        <div className="container section-header">
+          <div>
+            <p className="eyebrow">Notice Board</p>
+            <h2>Current communication from the school.</h2>
+          </div>
+        </div>
         <div className="container stack-list">
           {data.map((item) => (
             <SectionCard key={item.id} title={item.title} meta={`${item.category} · ${new Date(item.publish_date).toLocaleDateString()}`}>

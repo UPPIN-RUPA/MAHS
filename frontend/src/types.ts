@@ -4,11 +4,18 @@ export type SiteSettings = {
   logo: string;
   hero_title: string;
   hero_subtitle: string;
+  about_title: string;
   address: string;
   phone: string;
   email: string;
+  principal_name: string;
   principal_message: string;
+  principal_photo: string;
   about_text: string;
+  facebook_url: string;
+  instagram_url: string;
+  youtube_url: string;
+  is_active: boolean;
   updated_at: string | null;
 };
 

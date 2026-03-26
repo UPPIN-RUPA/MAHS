@@ -26,13 +26,24 @@ export function EventDetailPage() {
     <>
       <PageHero eyebrow="Event Detail" title={data.title || "Event"} description={data.venue ? `${data.event_date} · ${data.venue}` : "Detailed event information from the MAHS backend."} />
       <section className="content-section">
-        <div className="container stack-list">
-          <article className="content-card">
+        <div className="container detail-shell">
+          <article className="content-card detail-primary">
+            {data.cover_image ? <div className="detail-image" style={{ backgroundImage: `linear-gradient(rgba(9, 28, 48, 0.18), rgba(9, 28, 48, 0.4)), url('${data.cover_image}')` }} /> : null}
+            <p className="meta">
+              {data.event_date}
+              {data.start_time ? ` · ${data.start_time}` : ""}
+              {data.end_time ? ` - ${data.end_time}` : ""}
+            </p>
             <p>{data.description}</p>
+          </article>
+          <aside className="info-card detail-side">
+            <p className="eyebrow">Event Info</p>
+            <h3>{data.venue || "Venue to be announced"}</h3>
+            <p>Status: {data.status || "upcoming"}</p>
             <Link className="text-link" to="/events">
               Back to events
             </Link>
-          </article>
+          </aside>
         </div>
       </section>
     </>

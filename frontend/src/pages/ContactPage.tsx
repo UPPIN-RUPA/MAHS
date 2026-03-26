@@ -37,8 +37,10 @@ export function ContactPage() {
             <h3>School Contact</h3>
             <p>123 Academy Street<br />Hometown, State 00000</p>
             <p>+1 (555) 010-2020<br />info@mahs-school.edu</p>
+            <p>Office hours: Monday to Friday, 8:00 AM to 4:00 PM</p>
           </article>
           <form className="contact-form" onSubmit={handleSubmit}>
+            <p className="eyebrow">Send Inquiry</p>
             <input name="name" placeholder="Name" required />
             <input name="email" type="email" placeholder="Email" required />
             <input name="phone" placeholder="Phone" />

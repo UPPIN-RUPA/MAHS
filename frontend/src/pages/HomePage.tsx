@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useMemo } from "react";
 import { SectionCard } from "../components/SectionCard";
 import { useApiData } from "../hooks/useApiData";
@@ -10,11 +11,18 @@ const defaultSettings: SiteSettings = {
   logo: "",
   hero_title: "A modern school website built for communication and community.",
   hero_subtitle: "MAHS brings announcements, academics, events, gallery content, and school information into one digital platform.",
+  about_title: "About Our School",
   address: "",
   phone: "",
   email: "",
+  principal_name: "",
   principal_message: "",
+  principal_photo: "",
   about_text: "",
+  facebook_url: "",
+  instagram_url: "",
+  youtube_url: "",
+  is_active: true,
   updated_at: null,
 };
 
@@ -27,6 +35,11 @@ export function HomePage() {
   const featuredEvents = useMemo(() => events.data.slice(0, 3), [events.data]);
   const featuredAnnouncements = useMemo(() => announcements.data.slice(0, 3), [announcements.data]);
   const featuredGallery = useMemo(() => gallery.data.filter((item) => item.is_featured).slice(0, 3), [gallery.data]);
+  const heroStats = [
+    { value: `${featuredAnnouncements.length || 0}`, label: "Active notices" },
+    { value: `${featuredEvents.length || 0}`, label: "Visible events" },
+    { value: `${featuredGallery.length || 0}`, label: "Featured moments" },
+  ];
 
   return (
     <>
@@ -34,11 +47,28 @@ export function HomePage() {
         <div className="container hero-grid">
           <div>
             <p className="eyebrow">MAHS School Platform</p>
-            <h1>{site.data.hero_title}</h1>
+            <h1>{site.data.hero_title || site.data.school_name}</h1>
             <p className="lead">{site.data.hero_subtitle}</p>
+            <div className="button-row">
+              <Link className="button primary" to="/announcements">
+                View announcements
+              </Link>
+              <Link className="button secondary" to="/events">
+                Explore events
+              </Link>
+            </div>
+            <div className="hero-stat-row">
+              {heroStats.map((stat) => (
+                <div key={stat.label} className="hero-stat">
+                  <strong>{stat.value}</strong>
+                  <span>{stat.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="hero-card">
-            <h2>Phase 1 Focus</h2>
+            <h2>{site.data.school_name}</h2>
+            <p className="card-kicker">{site.data.tagline || "A connected school experience"}</p>
             <ul>
               <li>Professional public website</li>
               <li>API-first backend content system</li>
@@ -50,16 +80,40 @@ export function HomePage() {
       </section>
 
       <section className="content-section">
+        <div className="container showcase-grid">
+          <article className="showcase-card">
+            <p className="eyebrow">Welcome</p>
+            <h2>One digital home for students, staff, and alumni.</h2>
+            <p>
+              MAHS is designed to work as the school’s communication layer, not just its public brochure. Announcements,
+              events, academics, and school identity now live in one platform.
+            </p>
+          </article>
+          <article className="showcase-card accent">
+            <p className="eyebrow">Principal Message</p>
+            <h2>{site.data.principal_name || "School Leadership"}</h2>
+            <p>{site.data.principal_message || "This section can carry a principal or leadership message pulled directly from the backend."}</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="content-section">
         <div className="container section-header">
           <div>
             <p className="eyebrow">Announcements</p>
             <h2>Latest updates</h2>
           </div>
+          <Link className="text-link" to="/announcements">
+            All notices
+          </Link>
         </div>
         <div className="container card-grid">
           {featuredAnnouncements.map((item) => (
-            <SectionCard key={item.id} title={item.title} meta={item.category}>
+            <SectionCard key={item.id} title={item.title} meta={`${item.category} · ${new Date(item.publish_date).toLocaleDateString()}`}>
               <p>{item.summary}</p>
+              <Link className="text-link" to={`/announcements/${item.slug}`}>
+                Read notice
+              </Link>
             </SectionCard>
           ))}
           {!featuredAnnouncements.length && <SectionCard title="No announcements yet">Add content in Django admin to populate the homepage.</SectionCard>}
@@ -72,11 +126,17 @@ export function HomePage() {
             <p className="eyebrow">Events</p>
             <h2>School calendar highlights</h2>
           </div>
+          <Link className="text-link" to="/events">
+            Event calendar
+          </Link>
         </div>
         <div className="container card-grid">
           {featuredEvents.map((item) => (
             <SectionCard key={item.id} title={item.title} meta={`${item.event_date} · ${item.venue}`}>
               <p>{item.description}</p>
+              <Link className="text-link" to={`/events/${item.slug}`}>
+                Event details
+              </Link>
             </SectionCard>
           ))}
           {!featuredEvents.length && <SectionCard title="No events yet">Upcoming programs and celebrations will appear here.</SectionCard>}
@@ -89,6 +149,9 @@ export function HomePage() {
             <p className="eyebrow">Gallery</p>
             <h2>School life highlights</h2>
           </div>
+          <Link className="text-link" to="/gallery">
+            Open gallery
+          </Link>
         </div>
         <div className="container gallery-grid">
           {featuredGallery.map((item) => (
@@ -103,6 +166,29 @@ export function HomePage() {
               <p>Featured gallery content will appear here after backend data is added.</p>
             </article>
           )}
+        </div>
+      </section>
+
+      <section className="content-section alt">
+        <div className="container section-header">
+          <div>
+            <p className="eyebrow">Community</p>
+            <h2>Built to grow beyond a brochure site.</h2>
+          </div>
+        </div>
+        <div className="container three-up">
+          <article className="info-card">
+            <h3>Students</h3>
+            <p>Clear access to school updates, academic information, and events from a mobile-friendly public platform.</p>
+          </article>
+          <article className="info-card">
+            <h3>Administration</h3>
+            <p>Django admin keeps content current without developers having to update static pages manually.</p>
+          </article>
+          <article className="info-card">
+            <h3>Future Alumni Layer</h3>
+            <p>The architecture is ready to grow into alumni profiles, networking, and deeper school-community participation.</p>
+          </article>
         </div>
       </section>
     </>
