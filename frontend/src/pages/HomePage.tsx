@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
 import { useMemo } from "react";
+import { Autoplay, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
 import { SectionCard } from "../components/SectionCard";
 import { useApiData } from "../hooks/useApiData";
 import { api } from "../services/api";
@@ -40,41 +44,107 @@ export function HomePage() {
     { value: `${featuredEvents.length || 0}`, label: "Visible events" },
     { value: `${featuredGallery.length || 0}`, label: "Featured moments" },
   ];
+  const heroSlides = useMemo(() => {
+    const galleryImages = featuredGallery.map((item) => item.image).filter(Boolean);
+    const eventImage = featuredEvents.find((item) => item.cover_image)?.cover_image;
+
+    return [
+      {
+        key: "identity",
+        eyebrow: "MAHS School",
+        title: site.data.hero_title || site.data.school_name,
+        description: site.data.hero_subtitle || "A modern school platform for communication, academics, and community life.",
+        ctaLabel: "Explore academics",
+        ctaTo: "/academics",
+        image: galleryImages[0] || eventImage || "",
+        tone: "maroon",
+      },
+      {
+        key: "admissions",
+        eyebrow: "Admissions",
+        title: "Admissions open for the 2026-27 academic year.",
+        description: "Discover the MAHS learning environment, academic priorities, and student support experience.",
+        ctaLabel: "Contact us",
+        ctaTo: "/contact",
+        image: galleryImages[1] || galleryImages[0] || "",
+        tone: "gold",
+      },
+      {
+        key: "events",
+        eyebrow: "Events",
+        title: featuredEvents[0]?.title || "Campus events that keep the school community connected.",
+        description: featuredEvents[0]?.description || "From celebrations to student programs, the school calendar stays visible and accessible.",
+        ctaLabel: "View events",
+        ctaTo: "/events",
+        image: eventImage || galleryImages[2] || "",
+        tone: "navy",
+      },
+      {
+        key: "community",
+        eyebrow: "Community",
+        title: "One platform for school updates, milestones, and everyday campus life.",
+        description: "Announcements, events, academics, and gallery highlights now live in one place for students, staff, and families.",
+        ctaLabel: "Open gallery",
+        ctaTo: "/gallery",
+        image: galleryImages[2] || galleryImages[0] || "",
+        tone: "forest",
+      },
+    ];
+  }, [featuredEvents, featuredGallery, site.data.hero_subtitle, site.data.hero_title, site.data.school_name]);
 
   return (
     <>
       <section className="hero">
-        <div className="container hero-grid">
-          <div>
-            <p className="eyebrow">MAHS School Platform</p>
-            <h1>{site.data.hero_title || site.data.school_name}</h1>
-            <p className="lead">{site.data.hero_subtitle}</p>
-            <div className="button-row">
-              <Link className="button primary" to="/announcements">
-                View announcements
-              </Link>
-              <Link className="button secondary" to="/events">
-                Explore events
-              </Link>
-            </div>
-            <div className="hero-stat-row">
-              {heroStats.map((stat) => (
-                <div key={stat.label} className="hero-stat">
-                  <strong>{stat.value}</strong>
-                  <span>{stat.label}</span>
-                </div>
+        <div className="container">
+          <div className="hero-carousel-shell">
+            <Swiper className="hero-carousel" modules={[Autoplay, Pagination]} autoplay={{ delay: 4500, disableOnInteraction: false }} pagination={{ clickable: true }} loop>
+              {heroSlides.map((slide) => (
+                <SwiperSlide key={slide.key}>
+                  <article
+                    className={`hero-slide tone-${slide.tone}`}
+                    style={
+                      slide.image
+                        ? {
+                            backgroundImage: `linear-gradient(120deg, rgba(10, 24, 45, 0.78), rgba(10, 24, 45, 0.38)), url('${slide.image}')`,
+                          }
+                        : undefined
+                    }
+                  >
+                    <div className="hero-slide-copy">
+                      <p className="eyebrow">{slide.eyebrow}</p>
+                      <h1>{slide.title}</h1>
+                      <p className="lead">{slide.description}</p>
+                      <div className="button-row">
+                        <Link className="button primary" to={slide.ctaTo}>
+                          {slide.ctaLabel}
+                        </Link>
+                        <Link className="button secondary" to="/announcements">
+                          Latest updates
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+                </SwiperSlide>
               ))}
-            </div>
+            </Swiper>
+            <aside className="hero-card hero-side-panel">
+              <h2>{site.data.school_name}</h2>
+              <p className="card-kicker">{site.data.tagline || "A connected school experience"}</p>
+              <ul>
+                <li>Professional public website</li>
+                <li>API-first backend content system</li>
+                <li>School announcements and events visibility</li>
+                <li>Admin-managed updates without code edits</li>
+              </ul>
+            </aside>
           </div>
-          <div className="hero-card">
-            <h2>{site.data.school_name}</h2>
-            <p className="card-kicker">{site.data.tagline || "A connected school experience"}</p>
-            <ul>
-              <li>Professional public website</li>
-              <li>API-first backend content system</li>
-              <li>School announcements and events visibility</li>
-              <li>Admin-managed updates without code edits</li>
-            </ul>
+          <div className="hero-stat-row">
+            {heroStats.map((stat) => (
+              <div key={stat.label} className="hero-stat">
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
