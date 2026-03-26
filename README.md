@@ -1,125 +1,120 @@
-# MAHS School Website
+# MAHS
 
-MAHS is a Django-based school website designed as a central digital platform for students, alumni, staff, and school administration.
+MAHS is a school website and community platform project being rebuilt into a serious full-stack architecture.
 
-This project is intentionally structured as more than a brochure site. The public website presents the school professionally, while the backend admin gives staff a way to keep announcements, events, academics, and gallery content current without editing code.
+The repository now contains two tracks:
 
-## Product Direction
+- the original Django-template MVP at the repository root, kept as a reference implementation for page flow, admin concepts, and styling direction
+- the new target architecture under `backend/` and `frontend/`, which is the actual long-term build path
 
-The site is built as a phased school hub.
+## Final Architecture
 
-### MVP
+### Phase 1
+
+- public school website
+- admin-managed content
+- Django admin for non-technical staff
+- Django REST Framework APIs
+- React frontend consuming APIs
+
+### Later Phases
+
+- student authentication
+- alumni authentication
+- profile system
+- community and participation features
+
+## MVP Modules
+
+The Phase 1 scope is intentionally frozen to:
 
 - Home
 - About
 - Academics
-- Events
 - Announcements
+- Events
 - Gallery
 - Contact
-- Django admin for content management
+- Admin content management
 
-### Version 2
-
-- student login
-- alumni login
-- profile system
-- controlled access features
-
-### Version 3
-
-- discussions
-- messaging
-- richer school community features
-
-## Current Features
-
-- school-branded public homepage
-- about page for school mission and identity
-- academics listing
-- events page with upcoming and past events
-- announcements page for notices and updates
-- gallery page for school highlights
-- contact page with inquiry details
-- admin-managed content models for announcements, events, academics, and gallery items
-- responsive templates and reusable styling
-
-## Tech Stack
-
-- Python 3
-- Django 4.2
-- SQLite for local development
-- Django admin
-
-## Project Structure
+## Repository Layout
 
 ```text
 MAHS/
-  core/
-  mahs_site/
-  static/
-  templates/
-  manage.py
-  requirements.txt
+  backend/
+    apps/
+      academics/
+      announcements/
+      contact/
+      core/
+      events/
+      gallery/
+    config/
+    manage.py
+    requirements.txt
+  frontend/
+    src/
+      components/
+      layouts/
+      pages/
+      services/
+    package.json
+  core/                 # legacy template MVP reference
+  mahs_site/            # legacy template MVP reference
+  templates/            # legacy template MVP reference
+  static/               # legacy template MVP reference
 ```
 
-## Local Setup
+## Backend Domain Models
 
-### 1. Create a virtual environment
+The API-first backend is structured around these MVP models:
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
+- `SiteSettings`
+- `AcademicsContent`
+- `Announcement`
+- `Event`
+- `GalleryItem`
+- `ContactMessage`
 
-### 2. Install dependencies
+## API Contract
 
-```bash
-python3 -m pip install -r requirements.txt
-```
+Public read endpoints:
 
-### 3. Run migrations
+- `GET /api/site-settings/`
+- `GET /api/academics/`
+- `GET /api/announcements/`
+- `GET /api/announcements/<slug>/`
+- `GET /api/events/`
+- `GET /api/events/<slug>/`
+- `GET /api/gallery/`
 
-```bash
-python3 manage.py migrate
-```
+Public write endpoint:
 
-### 4. Create an admin user
+- `POST /api/contact/`
 
-```bash
-python3 manage.py createsuperuser
-```
+Admin management remains in Django admin for Phase 1.
 
-### 5. Start the development server
+## Recommended Stack
 
-```bash
-python3 manage.py runserver
-```
+- Backend: Django + Django REST Framework
+- Database: PostgreSQL-ready Django configuration
+- Frontend: React + Vite
+- Admin: Django admin
 
-Open:
+## Why This Structure
 
-- public site: `http://127.0.0.1:8000/`
-- admin: `http://127.0.0.1:8000/admin/`
+This split makes MAHS stronger as a real project because it demonstrates:
 
-## Content Management
-
-The Django admin is the operational side of the MVP. School staff can manage:
-
-- announcements
-- events
-- academic program entries
-- gallery items
-
-This keeps the site maintainable for non-developers and matches the core project requirement that the school should be able to update content without code changes.
-
-## Why This Project Is Useful
-
-MAHS is a strong full-stack portfolio project because it combines:
-
-- public website design
-- backend architecture
+- API-first backend design
+- frontend/backend separation
 - admin workflows
-- database-backed content
-- role-oriented future expansion
+- scalable content architecture
+- a realistic school platform use case
 
-It is a realistic school platform rather than a generic CRUD demo.
+## Next Build Steps
+
+1. Finish the Phase 1 backend APIs and admin polish
+2. Build the React public pages against those APIs
+3. Configure PostgreSQL for deployed environments
+4. Add media handling for gallery uploads
+5. Move into auth and alumni features only after the public MVP is stable
