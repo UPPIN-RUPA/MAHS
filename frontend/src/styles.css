@@ -50,10 +50,12 @@ body {
   font-family: Georgia, "Times New Roman", serif;
   background: var(--bg-layer);
   color: var(--ink);
+  overflow-x: hidden;
 }
 
 #root {
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 a {
@@ -76,6 +78,7 @@ button {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 .site-main {
@@ -412,11 +415,14 @@ button {
   justify-content: center;
   align-items: stretch;
   padding: 1rem 0 0.5rem;
+  padding-inline: 2.5rem;
+  overflow: hidden;
 }
 
 .glass-highlight-card {
   position: relative;
   width: 220px;
+  max-width: 100%;
   min-height: 230px;
   background: linear-gradient(rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.1));
   border: 1px solid rgba(255, 255, 255, 0.35);
@@ -428,7 +434,7 @@ button {
   gap: 0.8rem;
   transition: 0.5s;
   border-radius: 20px;
-  margin: 0 -36px;
+  margin: 0 -24px;
   backdrop-filter: blur(10px);
   transform: rotate(calc(var(--r) * 1deg));
   text-align: center;
@@ -437,7 +443,7 @@ button {
 
 .glass-highlights:hover .glass-highlight-card {
   transform: rotate(0deg);
-  margin: 0 10px;
+  margin: 0 8px;
 }
 
 .glass-highlight-icon {
