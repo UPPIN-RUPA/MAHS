@@ -10,6 +10,15 @@ import { useApiData } from "../hooks/useApiData";
 import { api } from "../services/api";
 import type { Announcement, EventItem, GalleryItem, SiteSettings } from "../types";
 
+const localSchoolImages = {
+  performance: "/images/school-performance.png",
+  crafts: "/images/classroom-crafts.png",
+  greenDay: "/images/green-day.png",
+  publicSpeaking: "/images/public-speaking.png",
+  assembly: "/images/student-assembly.png",
+  fieldVisit: "/images/field-visit.png",
+};
+
 const defaultSettings: SiteSettings = {
   school_name: "MAHS",
   tagline: "",
@@ -41,6 +50,14 @@ export function HomePage() {
   const featuredAnnouncements = useMemo(() => announcements.data.slice(0, 3), [announcements.data]);
   const featuredGallery = useMemo(() => gallery.data.filter((item) => item.is_featured).slice(0, 3), [gallery.data]);
   const galleryPreview = useMemo(() => gallery.data.slice(0, 6), [gallery.data]);
+  const fallbackGalleryPreview = [
+    { id: "performance", title: "Student performance showcase", image: localSchoolImages.performance, category: "school life" },
+    { id: "crafts", title: "Creative classroom projects", image: localSchoolImages.crafts, category: "classroom" },
+    { id: "green-day", title: "Green day celebration", image: localSchoolImages.greenDay, category: "events" },
+    { id: "public-speaking", title: "Recognition and speaking event", image: localSchoolImages.publicSpeaking, category: "achievements" },
+    { id: "assembly", title: "Assembly and student gathering", image: localSchoolImages.assembly, category: "community" },
+    { id: "field-visit", title: "Experiential learning visit", image: localSchoolImages.fieldVisit, category: "activities" },
+  ];
   const heroStats = [
     { value: `${featuredAnnouncements.length || 0}`, label: "Active notices" },
     { value: `${featuredEvents.length || 0}`, label: "Visible events" },
@@ -80,7 +97,7 @@ export function HomePage() {
         description: site.data.hero_subtitle || "A modern school platform for communication, academics, and community life.",
         ctaLabel: "Explore academics",
         ctaTo: "/academics",
-        image: galleryImages[0] || eventImage || "",
+        image: galleryImages[0] || eventImage || localSchoolImages.performance,
         tone: "maroon",
       },
       {
@@ -90,7 +107,7 @@ export function HomePage() {
         description: "Discover the MAHS learning environment, academic priorities, and student support experience.",
         ctaLabel: "Contact us",
         ctaTo: "/contact",
-        image: galleryImages[1] || galleryImages[0] || "",
+        image: galleryImages[1] || galleryImages[0] || localSchoolImages.crafts,
         tone: "gold",
       },
       {
@@ -100,7 +117,7 @@ export function HomePage() {
         description: featuredEvents[0]?.description || "From celebrations to student programs, the school calendar stays visible and accessible.",
         ctaLabel: "View events",
         ctaTo: "/events",
-        image: eventImage || galleryImages[2] || "",
+        image: eventImage || galleryImages[2] || localSchoolImages.greenDay,
         tone: "navy",
       },
       {
@@ -110,7 +127,7 @@ export function HomePage() {
         description: "Announcements, events, academics, and gallery highlights now live in one place for students, staff, and families.",
         ctaLabel: "Open gallery",
         ctaTo: "/gallery",
-        image: galleryImages[2] || galleryImages[0] || "",
+        image: galleryImages[2] || galleryImages[0] || localSchoolImages.assembly,
         tone: "forest",
       },
     ];
@@ -220,11 +237,9 @@ export function HomePage() {
             <PencilLoader label="Loading gallery..." />
           ) : gallery.error ? (
             <p className="state-text">Unable to load gallery right now.</p>
-          ) : galleryPreview.length === 0 ? (
-            <p className="state-text">No gallery items available.</p>
           ) : (
             <div className="gallery-preview-grid">
-              {galleryPreview.map((item) => (
+              {(galleryPreview.length ? galleryPreview : fallbackGalleryPreview).map((item) => (
                 <article key={item.id} className="gallery-preview-card">
                   <div className="gallery-preview-image-wrap">
                     <img src={item.image} alt={item.title} className="gallery-preview-image" />
