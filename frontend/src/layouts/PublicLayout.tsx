@@ -3,7 +3,7 @@ import { NavLink, Outlet } from "react-router-dom";
 
 export function PublicLayout() {
   return (
-    <>
+    <div className="site-shell">
       <header className="site-header">
         <div className="container nav-shell">
           <NavLink className="brand" to="/">
@@ -20,7 +20,7 @@ export function PublicLayout() {
           </nav>
         </div>
       </header>
-      <main>
+      <main className="site-main">
         <Outlet />
       </main>
       <footer className="site-footer">
@@ -47,6 +47,6 @@ export function PublicLayout() {
           </div>
         </div>
       </footer>
-    </>
+    </div>
   );
 }
