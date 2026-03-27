@@ -35,16 +35,13 @@ export function HomeCarousel({ schoolName, tagline, slides, stats }: HomeCarouse
           <Swiper className="hero-carousel" modules={[Autoplay, Pagination]} autoplay={{ delay: 4500, disableOnInteraction: false }} pagination={{ clickable: true }} loop>
             {slides.map((slide) => (
               <SwiperSlide key={slide.key}>
-                <article
-                  className={`hero-slide tone-${slide.tone}`}
-                  style={
-                    slide.image
-                      ? {
-                          backgroundImage: `linear-gradient(120deg, rgba(10, 24, 45, 0.78), rgba(10, 24, 45, 0.38)), url('${slide.image}')`,
-                        }
-                      : undefined
-                  }
-                >
+                <article className={`hero-slide tone-${slide.tone}`}>
+                  {slide.image ? (
+                    <div className="hero-slide-media">
+                      <img src={slide.image} alt={slide.title} className="hero-slide-image" />
+                    </div>
+                  ) : null}
+                  <div className="hero-slide-overlay" />
                   <div className="hero-slide-copy">
                     <p className="eyebrow">{slide.eyebrow}</p>
                     <h1>{slide.title}</h1>
