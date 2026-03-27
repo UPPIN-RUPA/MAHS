@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useMemo } from "react";
 import { HomeCarousel } from "../components/HomeCarousel";
 import { HomeStats } from "../components/HomeStats";
+import { GlassHighlights } from "../components/GlassHighlights";
 import { LeadershipSection } from "../components/LeadershipSection";
 import { PencilLoader } from "../components/PencilLoader";
 import { useApiData } from "../hooks/useApiData";
@@ -119,6 +120,7 @@ export function HomePage() {
       <HomeCarousel schoolName={site.data.school_name} tagline={site.data.tagline} slides={heroSlides} stats={heroStats} />
       <HomeStats stats={schoolStats} />
       <LeadershipSection principalName={site.data.principal_name || "School Leadership"} principalMessage={site.data.principal_message || undefined} schoolName={site.data.school_name || "MAHS"} />
+      <GlassHighlights />
 
       <section className="homepage-section">
         <div className="container section-header">
