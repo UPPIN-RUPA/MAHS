@@ -21,7 +21,9 @@ export function PublicLayout() {
         </div>
       </header>
       <main className="site-main">
-        <Outlet />
+        <div className="page-view">
+          <Outlet />
+        </div>
       </main>
       <footer className="site-footer">
         <div className="container footer-grid">
