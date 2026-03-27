@@ -3,7 +3,6 @@ import { useMemo } from "react";
 import { HomeCarousel } from "../components/HomeCarousel";
 import { HomeStats } from "../components/HomeStats";
 import { LeadershipSection } from "../components/LeadershipSection";
-import { SectionCard } from "../components/SectionCard";
 import { useApiData } from "../hooks/useApiData";
 import { api } from "../services/api";
 import type { Announcement, EventItem, GalleryItem, SiteSettings } from "../types";
@@ -38,6 +37,7 @@ export function HomePage() {
   const featuredEvents = useMemo(() => events.data.slice(0, 3), [events.data]);
   const featuredAnnouncements = useMemo(() => announcements.data.slice(0, 3), [announcements.data]);
   const featuredGallery = useMemo(() => gallery.data.filter((item) => item.is_featured).slice(0, 3), [gallery.data]);
+  const galleryPreview = useMemo(() => gallery.data.slice(0, 6), [gallery.data]);
   const heroStats = [
     { value: `${featuredAnnouncements.length || 0}`, label: "Active notices" },
     { value: `${featuredEvents.length || 0}`, label: "Visible events" },
@@ -119,98 +119,140 @@ export function HomePage() {
       <HomeStats stats={schoolStats} />
       <LeadershipSection principalName={site.data.principal_name || "School Leadership"} principalMessage={site.data.principal_message || undefined} schoolName={site.data.school_name || "MAHS"} />
 
-      <section className="content-section">
+      <section className="homepage-section">
         <div className="container section-header">
           <div>
-            <p className="eyebrow">Announcements</p>
-            <h2>Latest updates</h2>
+            <span className="section-kicker">Latest Updates</span>
+            <h2>Announcements</h2>
+            <p>Stay informed with the latest notices, academic updates, and school communications.</p>
           </div>
           <Link className="text-link" to="/announcements">
-            All notices
+            View all announcements
           </Link>
         </div>
-        <div className="container card-grid">
-          {featuredAnnouncements.map((item) => (
-            <SectionCard key={item.id} title={item.title} meta={`${item.category} · ${new Date(item.publish_date).toLocaleDateString()}`}>
-              <p>{item.summary}</p>
-              <Link className="text-link" to={`/announcements/${item.slug}`}>
-                Read notice
-              </Link>
-            </SectionCard>
-          ))}
-          {!featuredAnnouncements.length && <SectionCard title="No announcements yet">Add content in Django admin to populate the homepage.</SectionCard>}
-        </div>
-      </section>
-
-      <section className="content-section alt">
-        <div className="container section-header">
-          <div>
-            <p className="eyebrow">Events</p>
-            <h2>School calendar highlights</h2>
-          </div>
-          <Link className="text-link" to="/events">
-            Event calendar
-          </Link>
-        </div>
-        <div className="container card-grid">
-          {featuredEvents.map((item) => (
-            <SectionCard key={item.id} title={item.title} meta={`${item.event_date} · ${item.venue}`}>
-              <p>{item.description}</p>
-              <Link className="text-link" to={`/events/${item.slug}`}>
-                Event details
-              </Link>
-            </SectionCard>
-          ))}
-          {!featuredEvents.length && <SectionCard title="No events yet">Upcoming programs and celebrations will appear here.</SectionCard>}
-        </div>
-      </section>
-
-      <section className="content-section">
-        <div className="container section-header">
-          <div>
-            <p className="eyebrow">Gallery</p>
-            <h2>School life highlights</h2>
-          </div>
-          <Link className="text-link" to="/gallery">
-            Open gallery
-          </Link>
-        </div>
-        <div className="container gallery-grid">
-          {featuredGallery.map((item) => (
-            <article key={item.id} className="gallery-card" style={{ backgroundImage: `linear-gradient(rgba(9, 28, 48, 0.55), rgba(9, 28, 48, 0.8)), url('${item.image}')` }}>
-              <h3>{item.title}</h3>
-              <p>{item.category}</p>
-            </article>
-          ))}
-          {!featuredGallery.length && (
-            <article className="gallery-card placeholder">
-              <h3>Gallery preview</h3>
-              <p>Featured gallery content will appear here after backend data is added.</p>
-            </article>
+        <div className="container">
+          {announcements.loading ? (
+            <p className="state-text">Loading announcements...</p>
+          ) : announcements.error ? (
+            <p className="state-text">Unable to load announcements right now.</p>
+          ) : featuredAnnouncements.length === 0 ? (
+            <p className="state-text">No announcements available.</p>
+          ) : (
+            <div className="content-grid three-column-grid">
+              {featuredAnnouncements.map((item) => (
+                <article key={item.id} className="content-card">
+                  <div className="content-meta-row">
+                    <span className="content-chip">{item.category}</span>
+                    <span className="content-date">{new Date(item.publish_date).toLocaleDateString()}</span>
+                  </div>
+                  <h3>{item.title}</h3>
+                  <p>{item.summary || "Read the latest update from MAHS."}</p>
+                  <Link className="text-link" to={`/announcements/${item.slug}`}>
+                    Read more
+                  </Link>
+                </article>
+              ))}
+            </div>
           )}
         </div>
       </section>
 
-      <section className="content-section alt">
+      <section className="homepage-section">
         <div className="container section-header">
           <div>
-            <p className="eyebrow">Community</p>
-            <h2>Built to grow beyond a brochure site.</h2>
+            <span className="section-kicker">Upcoming Activities</span>
+            <h2>Events & School Life</h2>
+            <p>Explore the events and celebrations that make school life engaging and memorable.</p>
           </div>
+          <Link className="text-link" to="/events">
+            View all events
+          </Link>
         </div>
-        <div className="container three-up">
-          <article className="info-card">
-            <h3>Students</h3>
-            <p>Clear access to school updates, academic information, and events from a mobile-friendly public platform.</p>
-          </article>
-          <article className="info-card">
-            <h3>Administration</h3>
-            <p>Django admin keeps content current without developers having to update static pages manually.</p>
-          </article>
-          <article className="info-card">
-            <h3>Future Alumni Layer</h3>
-            <p>The architecture is ready to grow into alumni profiles, networking, and deeper school-community participation.</p>
-          </article>
+        <div className="container">
+          {events.loading ? (
+            <p className="state-text">Loading events...</p>
+          ) : events.error ? (
+            <p className="state-text">Unable to load events right now.</p>
+          ) : featuredEvents.length === 0 ? (
+            <p className="state-text">No events available.</p>
+          ) : (
+            <div className="content-grid three-column-grid">
+              {featuredEvents.map((item) => (
+                <article key={item.id} className="content-card event-card">
+                  <div className="content-meta-row">
+                    <span className="content-chip">{item.status}</span>
+                    <span className="content-date">{new Date(item.event_date).toLocaleDateString()}</span>
+                  </div>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                  <div className="event-mini-meta">
+                    {item.venue ? <span>{item.venue}</span> : null}
+                    {item.start_time ? <span>{item.start_time}</span> : null}
+                  </div>
+                  <Link className="text-link" to={`/events/${item.slug}`}>
+                    View details
+                  </Link>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="homepage-section">
+        <div className="container section-header">
+          <div>
+            <span className="section-kicker">Campus Moments</span>
+            <h2>Gallery Preview</h2>
+            <p>Take a quick look at the activities, celebrations, and experiences that shape student life.</p>
+          </div>
+          <Link className="text-link" to="/gallery">
+            Open full gallery
+          </Link>
+        </div>
+        <div className="container">
+          {gallery.loading ? (
+            <p className="state-text">Loading gallery...</p>
+          ) : gallery.error ? (
+            <p className="state-text">Unable to load gallery right now.</p>
+          ) : galleryPreview.length === 0 ? (
+            <p className="state-text">No gallery items available.</p>
+          ) : (
+            <div className="gallery-preview-grid">
+              {galleryPreview.map((item) => (
+                <article key={item.id} className="gallery-preview-card">
+                  <div className="gallery-preview-image-wrap">
+                    <img src={item.image} alt={item.title} className="gallery-preview-image" />
+                  </div>
+                  <div className="gallery-preview-body">
+                    <span className="content-chip">{item.category}</span>
+                    <h3>{item.title}</h3>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="homepage-section community-section">
+        <div className="container community-card">
+          <div className="community-copy">
+            <span className="section-kicker">School Community</span>
+            <h2>Building a learning environment that extends beyond the classroom</h2>
+            <p>
+              MAHS supports academic growth, discipline, participation, and shared experiences through strong communication,
+              meaningful events, and a connected school culture.
+            </p>
+          </div>
+          <div className="community-actions">
+            <Link to="/academics" className="button primary">
+              Explore Academics
+            </Link>
+            <Link to="/contact" className="button btn-secondary-dark">
+              Contact Us
+            </Link>
+          </div>
         </div>
       </section>
     </>
