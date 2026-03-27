@@ -36,12 +36,6 @@ export function HomeCarousel({ schoolName, tagline, slides, stats }: HomeCarouse
             {slides.map((slide) => (
               <SwiperSlide key={slide.key}>
                 <article className={`hero-slide tone-${slide.tone}`}>
-                  {slide.image ? (
-                    <div className="hero-slide-media">
-                      <img src={slide.image} alt={slide.title} className="hero-slide-image" />
-                    </div>
-                  ) : null}
-                  <div className="hero-slide-overlay" />
                   <div className="hero-slide-copy">
                     <p className="eyebrow">{slide.eyebrow}</p>
                     <h1>{slide.title}</h1>
@@ -55,6 +49,13 @@ export function HomeCarousel({ schoolName, tagline, slides, stats }: HomeCarouse
                       </Link>
                     </div>
                   </div>
+                  {slide.image ? (
+                    <div className="hero-slide-media">
+                      <div className="hero-slide-media-frame">
+                        <img src={slide.image} alt={slide.title} className="hero-slide-image" />
+                      </div>
+                    </div>
+                  ) : null}
                 </article>
               </SwiperSlide>
             ))}
