@@ -1,7 +1,18 @@
+import { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
-
 export function PublicLayout() {
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    if (typeof window === "undefined") return "light";
+    const savedTheme = window.localStorage.getItem("mahs-theme");
+    return savedTheme === "dark" ? "dark" : "light";
+  });
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    window.localStorage.setItem("mahs-theme", theme);
+  }, [theme]);
+
   return (
     <div className="site-shell">
       <header className="site-header">
@@ -9,15 +20,25 @@ export function PublicLayout() {
           <NavLink className="brand" to="/">
             MAHS
           </NavLink>
-          <nav className="site-nav">
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/about">About</NavLink>
-            <NavLink to="/academics">Academics</NavLink>
-            <NavLink to="/announcements">Announcements</NavLink>
-            <NavLink to="/events">Events</NavLink>
-            <NavLink to="/gallery">Gallery</NavLink>
-            <NavLink to="/contact">Contact</NavLink>
-          </nav>
+          <div className="nav-actions">
+            <nav className="site-nav">
+              <NavLink to="/">Home</NavLink>
+              <NavLink to="/about">About</NavLink>
+              <NavLink to="/academics">Academics</NavLink>
+              <NavLink to="/announcements">Announcements</NavLink>
+              <NavLink to="/events">Events</NavLink>
+              <NavLink to="/gallery">Gallery</NavLink>
+              <NavLink to="/contact">Contact</NavLink>
+            </nav>
+            <button
+              type="button"
+              className="theme-toggle"
+              onClick={() => setTheme((current) => (current === "light" ? "dark" : "light"))}
+              aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
+            >
+              <span>{theme === "light" ? "Dark" : "Light"}</span>
+            </button>
+          </div>
         </div>
       </header>
       <main className="site-main">
