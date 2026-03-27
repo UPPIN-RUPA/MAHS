@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useMemo } from "react";
+import { FeatureGlowCards } from "../components/FeatureGlowCards";
 import { HomeCarousel } from "../components/HomeCarousel";
 import { HomeStats } from "../components/HomeStats";
 import { GlassHighlights } from "../components/GlassHighlights";
@@ -121,6 +122,7 @@ export function HomePage() {
       <HomeStats stats={schoolStats} />
       <LeadershipSection principalName={site.data.principal_name || "School Leadership"} principalMessage={site.data.principal_message || undefined} schoolName={site.data.school_name || "MAHS"} />
       <GlassHighlights />
+      <FeatureGlowCards />
 
       <section className="homepage-section">
         <div className="container section-header">

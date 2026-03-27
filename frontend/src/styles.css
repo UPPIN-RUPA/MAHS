@@ -382,6 +382,90 @@ button {
   line-height: 1.6;
 }
 
+.feature-glow-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
+.feature-glow {
+  color: white;
+  position: relative;
+}
+
+.feature-glow::before,
+.feature-glow::after {
+  content: "";
+  background-color: #fab5704c;
+  position: absolute;
+}
+
+.feature-glow::before {
+  border-radius: 50%;
+  width: 6rem;
+  height: 6rem;
+  top: 30%;
+  right: 7%;
+}
+
+.feature-glow::after {
+  height: 3rem;
+  top: 8%;
+  right: 5%;
+  border: 1px solid rgba(250, 181, 112, 0.7);
+}
+
+.feature-glow-card {
+  width: 100%;
+  min-height: 15.875em;
+  padding: 1.2rem;
+  background-color: rgba(19, 34, 56, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-radius: 0.9rem;
+  transition: all ease 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.feature-glow-card:hover {
+  box-shadow: 0 0 20px 1px #ffbb763f;
+  border: 1px solid rgba(255, 255, 255, 0.454);
+}
+
+.feature-glow-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+.feature-glow-card strong {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.feature-glow-card p {
+  margin: 0 0 0.75rem;
+  font-size: 0.9em;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.feature-glow-card span {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
 .leadership-grid {
   display: grid;
   grid-template-columns: 1.35fr 0.95fr;
@@ -1004,6 +1088,7 @@ button {
   .hero-stat-row,
   .home-stats-grid,
   .three-column-grid,
+  .feature-glow-grid,
   .card-grid,
   .three-up,
   .gallery-grid,
