@@ -16,6 +16,12 @@ CSRF_TRUSTED_ORIGINS = [
     if origin.strip()
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get("CORS_ALLOWED_ORIGINS", "").split(",")
+    if origin.strip()
+]
+
 USE_POSTGRES = os.getenv("DB_NAME") is not None
 
 if USE_POSTGRES:

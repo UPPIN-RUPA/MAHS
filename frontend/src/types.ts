@@ -74,3 +74,10 @@ export type ContactMessageInput = {
   subject: string;
   message: string;
 };
+
+export type PaginatedResponse<T> = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
+};

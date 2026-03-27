@@ -1,4 +1,4 @@
-import type { AcademicsContent, Announcement, ContactMessageInput, EventItem, GalleryItem, SiteSettings } from "../types";
+import type { AcademicsContent, Announcement, ContactMessageInput, EventItem, GalleryItem, PaginatedResponse, SiteSettings } from "../types";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "http://127.0.0.1:8000/api";
 
@@ -18,15 +18,19 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return response.json() as Promise<T>;
 }
 
+function normalizeListResponse<T>(payload: T[] | PaginatedResponse<T>): T[] {
+  return Array.isArray(payload) ? payload : payload.results ?? [];
+}
+
 export const api = {
   getSiteSettings: () => request<SiteSettings>("/site-settings/"),
-  getAcademics: () => request<AcademicsContent[]>("/academics/"),
+  getAcademics: async () => normalizeListResponse(await request<AcademicsContent[] | PaginatedResponse<AcademicsContent>>("/academics/")),
   getAcademicDetail: (slug: string) => request<AcademicsContent>(`/academics/${slug}/`),
-  getAnnouncements: () => request<Announcement[]>("/announcements/"),
+  getAnnouncements: async () => normalizeListResponse(await request<Announcement[] | PaginatedResponse<Announcement>>("/announcements/")),
   getAnnouncementDetail: (slug: string) => request<Announcement>(`/announcements/${slug}/`),
-  getEvents: () => request<EventItem[]>("/events/"),
+  getEvents: async () => normalizeListResponse(await request<EventItem[] | PaginatedResponse<EventItem>>("/events/")),
   getEventDetail: (slug: string) => request<EventItem>(`/events/${slug}/`),
-  getGallery: () => request<GalleryItem[]>("/gallery/"),
+  getGallery: async () => normalizeListResponse(await request<GalleryItem[] | PaginatedResponse<GalleryItem>>("/gallery/")),
   submitContact: (payload: ContactMessageInput) =>
     request("/contact/", {
       method: "POST",
