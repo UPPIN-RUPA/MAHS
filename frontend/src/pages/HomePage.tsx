@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { HomeCarousel } from "../components/HomeCarousel";
 import { HomeStats } from "../components/HomeStats";
 import { LeadershipSection } from "../components/LeadershipSection";
+import { PencilLoader } from "../components/PencilLoader";
 import { useApiData } from "../hooks/useApiData";
 import { api } from "../services/api";
 import type { Announcement, EventItem, GalleryItem, SiteSettings } from "../types";
@@ -132,7 +133,7 @@ export function HomePage() {
         </div>
         <div className="container">
           {announcements.loading ? (
-            <p className="state-text">Loading announcements...</p>
+            <PencilLoader label="Loading announcements..." />
           ) : announcements.error ? (
             <p className="state-text">Unable to load announcements right now.</p>
           ) : featuredAnnouncements.length === 0 ? (
@@ -170,7 +171,7 @@ export function HomePage() {
         </div>
         <div className="container">
           {events.loading ? (
-            <p className="state-text">Loading events...</p>
+            <PencilLoader label="Loading events..." />
           ) : events.error ? (
             <p className="state-text">Unable to load events right now.</p>
           ) : featuredEvents.length === 0 ? (
@@ -212,7 +213,7 @@ export function HomePage() {
         </div>
         <div className="container">
           {gallery.loading ? (
-            <p className="state-text">Loading gallery...</p>
+            <PencilLoader label="Loading gallery..." />
           ) : gallery.error ? (
             <p className="state-text">Unable to load gallery right now.</p>
           ) : galleryPreview.length === 0 ? (
